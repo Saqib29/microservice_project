@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    container_name: mysqlDB
+    restart: always
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '${MYSQL_PORT}:3306'
+    expose:
+      - '${MYSQL_PORT}'
+    volumes:
+      - mysql-db:/var/lib/mysql
+    
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: mysqldb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - '8080:80'
+  
+  mongodb:
+    image: bitnami/mongodb:4
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_DATABASE=${MONGODB_DATABASE}
+      - MONGODB_USERNAME=${MONGODB_USERNAME}
+      - MONGODB_PASSWORD=${MONGODB_PASSWORD}
+    volumes:
+      - mongo-db:/data/db
+  
+  postgresql:
+    image: postgres
+    container_name: postgresql
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=${order_service}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgAdmin
+    restart: always
+    ports:
+      - '8888:80'
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=saqib@dev.com
+      - PGADMIN_DEFAULT_PASSWORD=devSaqib
+
+volumes:
+  mysql-db:
+  mongo-db:
+  postgres-db:
