@@ -6,7 +6,7 @@ import { DbConnection } from './database/database.connection';
 import { LoaderModule } from './loaders/loader.module';
 
 @Module({
-  imports: [AppConfigModule, DbConnection.forRoot(), LoaderModule.forRoot()],
+  imports: [AppConfigModule, LoaderModule.forRoot(), DbConnection.forRoot()],
   controllers: [AppController],
   providers: [AppService],
 })
