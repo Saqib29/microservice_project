@@ -1,13 +1,14 @@
+import axios from "axios";
 
 const authService = {
     async login(credentials: any) {
-        setTimeout(() => {console.log("waited!")}, 5000);
-        return { data: credentials };
+        const response =  await axios.post(`${process.env.AUTH_SERVICE_URL}/login`, credentials);
+        return response;
     },
 
     async register(userData: any) {
-        setTimeout(() => {console.log('waited!')}, 5000);
-        return { data: userData }
+        const response = await axios.post(`${process.env.AUTH_SERVICE_URL}/register`, userData);
+        return response;
     }
 }
 
