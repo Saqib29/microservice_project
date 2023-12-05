@@ -15,7 +15,7 @@ AppDataSource.initialize()
     app.use(express.json());
 
     // ROUTES
-    app.use("/api/user", userRouter);
+    app.use("/user", userRouter);
 
     app.get("/", (req, res) => {
       res.send("Hello from user service");
